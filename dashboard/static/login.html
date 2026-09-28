@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#05060a">
+  <title>JARVIS · Sign in</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    [hidden] { display: none !important; }
+
+    :root {
+      --bg:      #05060a;
+      --card:    rgba(15, 17, 25, 0.72);
+      --field:   rgba(255, 255, 255, 0.045);
+      --line:    rgba(255, 255, 255, 0.085);
+      --line-hi: rgba(255, 255, 255, 0.16);
+      --text:    #eef0f6;
+      --muted:   #8d95a9;
+      --faint:   #596077;
+      --accent:  #7c83ff;
+      --accent2: #22d3ee;
+      --danger:  #ff6b81;
+      --ok:      #34d399;
+      --ease:    cubic-bezier(.22, .8, .24, 1);
+      --font:    -apple-system, BlinkMacSystemFont, "Segoe UI Variable", "Segoe UI", Inter, Roboto, "Helvetica Neue", Arial, sans-serif;
+    }
+
+    html { background: var(--bg); }
+    html, body { min-height: 100%; color: var(--text); font-family: var(--font); -webkit-font-smoothing: antialiased; }
+    body { min-height: 100dvh; display: grid; place-items: center; padding: max(20px, env(safe-area-inset-top)) 16px max(20px, env(safe-area-inset-bottom)); overflow-x: hidden; }
+
+    /* ── ambient background ── */
+    .bg { position: fixed; inset: 0; z-index: -1; overflow: hidden; }
+    .bg::after {                                   /* fine grid that fades out from the centre */
+      content: ""; position: absolute; inset: 0;
+      background-image: linear-gradient(var(--line) 1px, transparent 1px), linear-gradient(90deg, var(--line) 1px, transparent 1px);
+      background-size: 56px 56px; opacity: .35;
+      -webkit-mask-image: radial-gradient(ellipse 60% 55% at 50% 45%, #000 0%, transparent 75%);
+              mask-image: radial-gradient(ellipse 60% 55% at 50% 45%, #000 0%, transparent 75%);
+    }
+    .glow { position: absolute; border-radius: 50%; filter: blur(90px); opacity: .5; will-change: transform; }
+    .glow.a { width: 520px; height: 520px; left: 50%; top: -160px; margin-left: -380px; background: radial-gradient(circle, #5b63ff, transparent 68%); animation: drift-a 22s ease-in-out infinite alternate; }
+    .glow.b { width: 460px; height: 460px; left: 50%; bottom: -200px; margin-left: -60px;  background: radial-gradient(circle, #16b8d6, transparent 68%); opacity: .32; animation: drift-b 26s ease-in-out infinite alternate; }
+    @keyframes drift-a { to { transform: translate(90px, 60px) scale(1.12); } }
+    @keyframes drift-b { to { transform: translate(-110px, -50px) scale(1.08); } }
+
+    /* ── card ── */
+    .shell { width: 100%; max-width: 420px; }
+    .card {
+      position: relative; padding: 28px 28px 22px;
+      background: var(--card); border: 1px solid var(--line); border-radius: 24px;
+      -webkit-backdrop-filter: blur(26px) saturate(140%); backdrop-filter: blur(26px) saturate(140%);
+      box-shadow: 0 1px 0 rgba(255,255,255,.06) inset, 0 30px 80px -20px rgba(0,0,0,.7);
+      animation: rise .6s var(--ease) both;
+    }
+    @keyframes rise { from { opacity: 0; transform: translateY(14px) scale(.985); } }
+
+    .brand { display: flex; align-items: center; justify-content: center; gap: 11px; margin-bottom: 20px; }
+    .brand svg { width: 30px; height: 30px; }
+    .brand .ring { transform-origin: 50% 50%; animation: spin 14s linear infinite; }
+    .brand .core { transform-origin: 50% 50%; animation: breathe 3.4s ease-in-out infinite; }
+    @keyframes spin    { to { transform: rotate(360deg); } }
+    @keyframes breathe { 50% { transform: scale(.82); opacity: .8; } }
+    .brand b { font-size: 15px; font-weight: 650; letter-spacing: .34em; padding-left: .34em; }
+
+    /* ── tabs ── */
+    .tabs { position: relative; display: grid; grid-template-columns: 1fr 1fr; padding: 4px; margin-bottom: 22px; background: var(--field); border: 1px solid var(--line); border-radius: 14px; }
+    .tabs::before { content: ""; position: absolute; top: 4px; bottom: 4px; left: 4px; width: calc(50% - 4px); border-radius: 10px; background: rgba(255,255,255,.09); box-shadow: 0 1px 0 rgba(255,255,255,.08) inset; transition: transform .35s var(--ease); }
+    .tabs[data-active="signup"]::before { transform: translateX(100%); }
+    .tab { position: relative; z-index: 1; height: 38px; background: none; border: 0; color: var(--muted); font: 600 13.5px var(--font); border-radius: 10px; cursor: pointer; transition: color .2s; }
+    .tab[aria-selected="true"] { color: var(--text); }
+    .tab:hover { color: var(--text); }
+
+    h1 { font-size: 24px; font-weight: 650; letter-spacing: -.02em; line-height: 1.2; }
+    .lead { margin: 6px 0 18px; font-size: 14px; line-height: 1.55; color: var(--muted); }
+
+    /* ── google ── */
+    .g-wrap { min-height: 44px; display: flex; justify-content: center; }
+    #g-official { display: flex; justify-content: center; width: 100%; color-scheme: light; }
+    .g-btn {
+      width: 100%; height: 44px; display: flex; align-items: center; justify-content: center; gap: 10px;
+      background: #131314; color: #e3e3e3; border: 1px solid #8e918f; border-radius: 999px;
+      font: 500 14px var(--font); letter-spacing: .01em; cursor: pointer; transition: background .15s, border-color .15s;
+    }
+    .g-btn:hover { background: #1d1d1f; border-color: #b0b3b1; }
+    .g-btn svg { width: 18px; height: 18px; }
+
+    .divider { display: flex; align-items: center; gap: 14px; margin: 16px 0; color: var(--faint); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; }
+    .divider::before, .divider::after { content: ""; flex: 1; height: 1px; background: var(--line); }
+
+    /* ── fields ── */
+    .field { margin-bottom: 12px; }
+    .field label { display: flex; justify-content: space-between; margin-bottom: 7px; font-size: 12.5px; font-weight: 550; color: var(--muted); }
+    .field label small { font-weight: 450; color: var(--faint); }
+    .input { position: relative; }
+    .input input {
+      width: 100%; height: 46px; padding: 0 14px; background: var(--field); color: var(--text);
+      border: 1px solid var(--line); border-radius: 12px; font: 400 16px var(--font); outline: none;
+      transition: border-color .18s, box-shadow .18s, background .18s;
+    }
+    .input input::placeholder { color: var(--faint); }
+    .input input:hover { border-color: var(--line-hi); }
+    .input input:focus { border-color: var(--accent); background: rgba(124,131,255,.07); box-shadow: 0 0 0 4px rgba(124,131,255,.16); }
+    .input input[aria-invalid="true"] { border-color: var(--danger); box-shadow: 0 0 0 4px rgba(255,107,129,.13); }
+    .input.has-btn input { padding-right: 46px; }
+    .eye { position: absolute; right: 5px; top: 5px; width: 38px; height: 38px; display: grid; place-items: center; background: none; border: 0; border-radius: 9px; color: var(--muted); cursor: pointer; }
+    .eye:hover { color: var(--text); background: rgba(255,255,255,.06); }
+    .eye svg { width: 19px; height: 19px; }
+    .eye .off { display: none; } .eye[aria-pressed="true"] .on { display: none; } .eye[aria-pressed="true"] .off { display: block; }
+
+    .code-input { font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace !important; font-size: 22px !important; font-weight: 650 !important; letter-spacing: .5em; text-align: center; text-transform: uppercase; padding-left: calc(14px + .5em) !important; }
+    .code-input::placeholder { letter-spacing: .5em; font-size: 18px; }
+    .help { margin-top: 7px; font-size: 12.5px; line-height: 1.5; color: var(--faint); }
+    .help b { color: var(--muted); font-weight: 550; }
+
+    .meter { display: flex; align-items: center; gap: 10px; margin-top: 9px; }
+    .meter i { flex: 1; height: 3px; border-radius: 3px; background: var(--line); transition: background .25s; }
+    .meter span { min-width: 44px; text-align: right; font-size: 11.5px; color: var(--faint); }
+    .meter[data-s="1"] i:nth-child(-n+1) { background: var(--danger); }
+    .meter[data-s="2"] i:nth-child(-n+2) { background: #ffb020; }
+    .meter[data-s="3"] i:nth-child(-n+3) { background: #7bd88f; }
+    .meter[data-s="4"] i:nth-child(-n+4) { background: var(--ok); }
+
+    .profile { display: flex; align-items: center; gap: 12px; padding: 12px 14px; margin-bottom: 18px; background: var(--field); border: 1px solid var(--line); border-radius: 14px; }
+    .profile img, .profile .ph { width: 40px; height: 40px; border-radius: 50%; flex: none; object-fit: cover; }
+    .profile .ph { display: grid; place-items: center; background: linear-gradient(135deg, var(--accent), var(--accent2)); color: #fff; font-size: 17px; font-weight: 650; }
+    .profile div { min-width: 0; }
+    .profile strong { display: block; font-size: 14px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .profile span { display: block; font-size: 12.5px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+    .err { min-height: 0; margin: 2px 0 12px; padding: 0; font-size: 13px; line-height: 1.45; color: var(--danger); }
+    .err:not(:empty) { padding: 10px 12px; background: rgba(255,107,129,.09); border: 1px solid rgba(255,107,129,.22); border-radius: 10px; animation: rise .25s var(--ease); }
+
+    /* ── primary button ── */
+    .primary {
+      position: relative; width: 100%; height: 48px; display: flex; align-items: center; justify-content: center; gap: 10px;
+      background: #f4f5fa; color: #0a0b10; border: 0; border-radius: 12px; font: 650 15px var(--font); letter-spacing: -.005em; cursor: pointer;
+      box-shadow: 0 1px 0 #fff inset, 0 10px 30px -12px rgba(124,131,255,.7);
+      transition: transform .12s, box-shadow .2s, background .2s, opacity .2s;
+    }
+    .primary:hover { background: #fff; box-shadow: 0 1px 0 #fff inset, 0 14px 36px -12px rgba(124,131,255,.9); }
+    .primary:active { transform: scale(.985); }
+    .primary[disabled] { opacity: .7; cursor: progress; }
+    .spin { display: none; width: 17px; height: 17px; border: 2px solid rgba(10,11,16,.25); border-top-color: #0a0b10; border-radius: 50%; animation: spin .7s linear infinite; }
+    .primary[aria-busy="true"] .spin { display: block; }
+    .card.done .primary { background: var(--ok); color: #04130c; }
+
+    .alt { margin-top: 16px; text-align: center; font-size: 13px; color: var(--muted); }
+    .link { background: none; border: 0; padding: 0; font: inherit; font-weight: 600; color: var(--text); cursor: pointer; text-decoration: underline; text-decoration-color: var(--line-hi); text-underline-offset: 3px; transition: text-decoration-color .15s; }
+    .link:hover { text-decoration-color: var(--accent); }
+
+    .foot { display: flex; align-items: center; justify-content: center; gap: 7px; margin-top: 14px; font-size: 12px; color: var(--faint); text-align: center; }
+    .foot svg { width: 13px; height: 13px; flex: none; }
+
+    /* ── auto reconnect veil ── */
+    .veil { position: absolute; inset: 0; z-index: 5; display: grid; place-content: center; justify-items: center; gap: 14px; background: rgba(8,9,14,.86); border-radius: 24px; color: var(--muted); font-size: 14px; }
+    .veil .spin { display: block; width: 24px; height: 24px; border-color: rgba(255,255,255,.15); border-top-color: var(--accent); }
+
+    .shake { animation: shake .38s var(--ease); }
+    @keyframes shake { 20%,60% { transform: translateX(-7px); } 40%,80% { transform: translateX(7px); } }
+
+    a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+    @media (max-width: 460px) {
+      .card { padding: 28px 20px 22px; border-radius: 22px; }
+      h1 { font-size: 22px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation: none !important; transition: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg" aria-hidden="true"><span class="glow a"></span><span class="glow b"></span></div>
+
+  <main class="shell">
+    <section class="card" id="card" aria-labelledby="title">
+
+      <div class="veil" id="veil" hidden>
+        <span class="spin" aria-hidden="true"></span><span>Reconnecting…</span>
+      </div>
+
+      <div class="brand">
+        <svg viewBox="0 0 32 32" fill="none" aria-hidden="true">
+          <defs>
+            <linearGradient id="lg" x1="4" y1="4" x2="28" y2="28"><stop stop-color="#8b91ff"/><stop offset="1" stop-color="#22d3ee"/></linearGradient>
+            <radialGradient id="cg" cx=".35" cy=".3" r=".9"><stop stop-color="#c4c8ff"/><stop offset="1" stop-color="#5b63ff"/></radialGradient>
+          </defs>
+          <g class="ring"><circle cx="16" cy="16" r="13.5" stroke="url(#lg)" stroke-width="1.6" stroke-dasharray="52 33" stroke-linecap="round"/></g>
+          <circle class="core" cx="16" cy="16" r="6" fill="url(#cg)"/>
+        </svg>
+        <b>JARVIS</b>
+      </div>
+
+      <div class="tabs" id="tabs" role="tablist" aria-label="Account" data-show="signin signup" data-active="signin">
+        <button class="tab" role="tab" id="tab-signin" data-mode="signin" aria-selected="true">Sign in</button>
+        <button class="tab" role="tab" id="tab-signup" data-mode="signup" aria-selected="false">Create account</button>
+      </div>
+
+      <h1 id="title">Welcome back</h1>
+      <p class="lead" id="lead">Sign in to control JARVIS from this device.</p>
+
+      <div data-show="signin signup">
+        <div class="g-wrap">
+          <div id="g-official" hidden></div>
+          <button type="button" class="g-btn" id="g-fallback">
+            <svg viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
+            <span id="g-label">Continue with Google</span>
+          </button>
+        </div>
+        <div class="divider"><span>or</span></div>
+      </div>
+
+      <div class="profile" id="profile" data-show="gfinish" hidden>
+        <img id="p-img" alt="" hidden><span class="ph" id="p-ph"></span>
+        <div><strong id="p-name"></strong><span id="p-mail"></span></div>
+      </div>
+
+      <form id="form" novalidate>
+        <div class="field" data-show="signup">
+          <label for="f-name">Full name</label>
+          <div class="input"><input id="f-name" name="name" type="text" autocomplete="name" placeholder="Ada Lovelace" maxlength="60"></div>
+        </div>
+
+        <div class="field" data-show="signin signup">
+          <label for="f-email">Email</label>
+          <div class="input"><input id="f-email" name="email" type="email" inputmode="email" autocomplete="email" autocapitalize="off" spellcheck="false" placeholder="you@example.com"></div>
+        </div>
+
+        <div class="field" data-show="signin signup">
+          <label for="f-pass">Password</label>
+          <div class="input has-btn">
+            <input id="f-pass" name="password" type="password" autocomplete="current-password" placeholder="Enter your password" maxlength="128">
+            <button type="button" class="eye" id="eye" aria-label="Show password" aria-pressed="false">
+              <svg class="on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>
+              <svg class="off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3l18 18"/><path d="M10.6 5.1A10.9 10.9 0 0 1 12 5c6.4 0 10 7 10 7a17 17 0 0 1-3.2 4.1M6.5 6.6C3.7 8.4 2 12 2 12s3.6 7 10 7a10 10 0 0 0 4.4-1"/><path d="M9.9 9.9a3 3 0 0 0 4.2 4.2"/></svg>
+            </button>
+          </div>
+          <div class="meter" id="meter" data-s="0" data-show="signup" hidden><i></i><i></i><i></i><i></i><span id="meter-t"></span></div>
+        </div>
+
+        <div class="field" data-show="signup gfinish">
+          <label for="f-code">Device code <small>from your computer</small></label>
+          <div class="input"><input id="f-code" name="device_code" class="code-input" type="text" maxlength="6" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="······"></div>
+          <p class="help">On your computer, press <b>Remote Control</b>. Needed once, to link your account.</p>
+        </div>
+
+        <div class="field" data-show="code">
+          <label for="f-pin">Session code</label>
+          <div class="input"><input id="f-pin" class="code-input" type="text" maxlength="6" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="······"></div>
+          <p class="help">Press <b>Remote Control</b> in the JARVIS desktop app to get a QR code or a 6-character code. It works once and expires in 10 minutes.</p>
+        </div>
+
+        <div class="err" id="err" role="alert" aria-live="polite"></div>
+
+        <button class="primary" id="submit" type="submit"><span id="submit-t">Sign in</span><span class="spin" aria-hidden="true"></span></button>
+      </form>
+
+      <p class="alt" data-show="signin signup">Have a one-time code instead? <button type="button" class="link" data-goto="code">Quick connect</button></p>
+      <p class="alt" data-show="code"><button type="button" class="link" data-goto="signin">← Back to sign in</button></p>
+      <p class="alt" data-show="gfinish"><button type="button" class="link" data-goto="signin">Use a different account</button></p>
+
+      <p class="foot">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>
+        Commands are AES-256 encrypted. Accounts stay on your computer.
+      </p>
+    </section>
+  </main>
+
+  <script>
+  (() => {
+    'use strict';
+    const $  = (s) => document.querySelector(s);
+    const $$ = (s) => Array.from(document.querySelectorAll(s));
+
+    const COPY = {
+      signin: { title: 'Welcome back',        lead: 'Sign in to control JARVIS from this device.',                       btn: 'Sign in',        g: 'Continue with Google' },
+      signup: { title: 'Create your account', lead: 'Link this device to your computer.',  btn: 'Create account', g: 'Sign up with Google' },
+      code:   { title: 'Quick connect',       lead: 'Enter the code shown in the desktop app.',                           btn: 'Connect',        g: '' },
+      gfinish:{ title: 'One last step',       lead: 'Confirm it\u2019s you at the computer to finish creating your account.', btn: 'Create account', g: '' },
+    };
+
+    let cfg = { google_client_id: '', google_ready: false, has_accounts: false };
+    let mode = 'signin', busy = false, gisReady = false, gisTried = false;
+    let gCred = null;
+
+    /* ── helpers ─────────────────────────────────────────────────────────── */
+    const err = $('#err');
+    function showError(msg, fieldId) {
+      err.textContent = msg || '';
+      $$('.input input').forEach(i => i.removeAttribute('aria-invalid'));
+      if (msg && fieldId) { const f = $('#' + fieldId); if (f) { f.setAttribute('aria-invalid', 'true'); f.focus(); } }
+      if (msg) { const c = $('#card'); c.classList.remove('shake'); void c.offsetWidth; c.classList.add('shake'); }
+    }
+    function setBusy(v) {
+      busy = v;
+      const b = $('#submit'); b.disabled = v; b.setAttribute('aria-busy', v ? 'true' : 'false');
+    }
+    async function post(url, body) {
+      try {
+        const r = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+        let data = {}; try { data = await r.json(); } catch (_) {}
+        return { status: r.status, data };
+      } catch (_) {
+        return { status: 0, data: { ok: false, error: 'Can\u2019t reach JARVIS. Make sure the app is running and you\u2019re on the same network.' } };
+      }
+    }
+    const store = {
+      set(k, v)  { try { localStorage.setItem(k, v);  } catch (_) {} },
+      del(k)     { try { localStorage.removeItem(k);  } catch (_) {} },
+      get(k)     { try { return localStorage.getItem(k); } catch (_) { return null; } },
+    };
+    function finish(data) {
+      sessionStorage.setItem('jarvis_token', data.token);
+      sessionStorage.setItem('jarvis_key', data.key);
+      if (data.user) sessionStorage.setItem('jarvis_user', JSON.stringify(data.user)); else sessionStorage.removeItem('jarvis_user');
+      if (data.device_token) store.set('jarvis_device_token', data.device_token);
+      $('#card').classList.add('done'); $('#submit-t').textContent = 'Success';
+      setTimeout(() => location.replace('/'), 380);
+    }
+
+    /* ── modes ───────────────────────────────────────────────────────────── */
+    function setMode(m, opts = {}) {
+      mode = m;
+      $$('[data-show]').forEach(el => {
+        const on = el.dataset.show.split(' ').includes(m);
+        if (el.id === 'meter') return;                         // driven by the password field
+        el.hidden = !on;
+      });
+      $('#title').textContent  = COPY[m].title;
+      $('#lead').textContent   = COPY[m].lead;
+      $('#submit-t').textContent = COPY[m].btn;
+      $('#g-label').textContent  = COPY[m].g || COPY.signin.g;
+      $('#tabs').dataset.active = m === 'signup' ? 'signup' : 'signin';
+      $('#tab-signin').setAttribute('aria-selected', String(m === 'signin'));
+      $('#tab-signup').setAttribute('aria-selected', String(m === 'signup'));
+      $('#f-pass').autocomplete = m === 'signup' ? 'new-password' : 'current-password';
+      $('#meter').hidden = !(m === 'signup' && $('#f-pass').value);
+      showError('');
+      if (m === 'signin' || m === 'signup') renderGoogle();
+      // Auto-focus only where there is a hardware keyboard — on a phone it would pop the keyboard up uninvited.
+      if (!opts.silent && window.matchMedia('(hover: hover)').matches) {
+        const first = { signin: '#f-email', signup: '#f-name', code: '#f-pin', gfinish: '#f-code' }[m];
+        setTimeout(() => { const f = $(first); if (f) f.focus({ preventScroll: true }); }, 30);
+      }
+      if (m === 'signin' && location.pathname === '/signup') history.replaceState(null, '', '/login');
+      if (m === 'signup' && location.pathname !== '/signup') history.replaceState(null, '', '/signup');
+    }
+    $$('.tab').forEach(t => t.addEventListener('click', () => setMode(t.dataset.mode)));
+    $$('[data-goto]').forEach(b => b.addEventListener('click', () => setMode(b.dataset.goto)));
+
+    /* ── password UI ─────────────────────────────────────────────────────── */
+    $('#eye').addEventListener('click', (e) => {
+      const pw = $('#f-pass'), show = pw.type === 'password';
+      pw.type = show ? 'text' : 'password';
+      e.currentTarget.setAttribute('aria-pressed', String(show));
+      e.currentTarget.setAttribute('aria-label', show ? 'Hide password' : 'Show password');
+    });
+    function strength(p) {
+      if (!p) return 0;
+      let s = 0;
+      if (p.length >= 8) s++;
+      if (p.length >= 12) s++;
+      if (/[a-z]/.test(p) && /[A-Z]/.test(p)) s++;
+      if (/\d/.test(p) && /[^A-Za-z0-9]/.test(p)) s++;
+      if (p.length < 8) s = Math.min(s, 1);
+      return Math.max(1, s);
+    }
+    $('#f-pass').addEventListener('input', () => {
+      const p = $('#f-pass').value, s = strength(p), m = $('#meter');
+      m.hidden = !(mode === 'signup' && p);
+      m.dataset.s = String(s);
+      $('#meter-t').textContent = ['', 'Weak', 'Fair', 'Good', 'Strong'][s];
+    });
+
+    /* codes: upper-case, same alphabet the desktop app issues */
+    for (const id of ['#f-code', '#f-pin']) {
+      $(id).addEventListener('input', (e) => { e.target.value = e.target.value.toUpperCase().replace(/[^A-Z2-9]/g, ''); });
+    }
+    $('#f-pin').addEventListener('input', (e) => { if (e.target.value.length === 6) submit(); });
+
+    /* ── submit ──────────────────────────────────────────────────────────── */
+    $('#form').addEventListener('submit', (e) => { e.preventDefault(); submit(); });
+
+    async function submit() {
+      if (busy) return;
+      showError('');
+      const v = (id) => $(id).value.trim();
+
+      if (mode === 'code') {
+        const pin = v('#f-pin');
+        if (pin.length < 6) return showError('Enter the 6-character code.', 'f-pin');
+        setBusy(true);
+        const { data } = await post('/login', { pin });
+        setBusy(false);
+        if (data.ok && data.token) {
+          sessionStorage.setItem('jarvis_key', pin);
+          sessionStorage.setItem('jarvis_token', data.token);
+          sessionStorage.removeItem('jarvis_user');
+          return finish({ token: data.token, key: pin });
+        }
+        $('#f-pin').value = '';
+        return showError(data.error || 'Invalid or expired code.', 'f-pin');
+      }
+
+      if (mode === 'gfinish') {
+        const code = v('#f-code');
+        if (code.length < 6) return showError('Enter the 6-character device code.', 'f-code');
+        return googleAuth(code);
+      }
+
+      const email = v('#f-email'), pass = $('#f-pass').value;
+      if (mode === 'signup' && !v('#f-name')) return showError('Enter your name.', 'f-name');
+      if (!/^[^@\s]+@[^@\s]+\.[^@\s.]{2,}$/.test(email)) return showError('Enter a valid email address.', 'f-email');
+      if (!pass) return showError('Enter your password.', 'f-pass');
+      if (mode === 'signup') {
+        if (pass.length < 8) return showError('Use at least 8 characters.', 'f-pass');
+        if (v('#f-code').length < 6) return showError('Enter the 6-character device code from your computer.', 'f-code');
+      }
+
+      setBusy(true);
+      const { data } = mode === 'signup'
+        ? await post('/api/auth/signup', { name: v('#f-name'), email, password: pass, device_code: v('#f-code') })
+        : await post('/api/auth/login',  { email, password: pass });
+      setBusy(false);
+
+      if (data.ok) return finish(data);
+      const map = { name: 'f-name', email: 'f-email', password: 'f-pass', device_code: 'f-code' };
+      if (mode === 'signin') $('#f-pass').value = '';
+      showError(data.error || 'Something went wrong. Please try again.', map[data.field] || (mode === 'signin' ? 'f-pass' : ''));
+    }
+
+    /* ── Google ──────────────────────────────────────────────────────────── */
+    function googleEligible() {
+      const h = location.hostname;
+      const isIp = /^\d{1,3}(\.\d{1,3}){3}$/.test(h) || h.includes(':');
+      const local = h === 'localhost' || h === '127.0.0.1' || h === '[::1]';
+      return local || (!isIp && location.protocol === 'https:');
+    }
+    function loadGis() {
+      return new Promise((resolve, reject) => {
+        if (window.google && google.accounts && google.accounts.id) return resolve();
+        const s = document.createElement('script');
+        s.src = 'https://accounts.google.com/gsi/client'; s.async = true; s.defer = true;
+        s.onload = resolve; s.onerror = () => reject(new Error('load'));
+        document.head.appendChild(s);
+        setTimeout(() => reject(new Error('timeout')), 8000);
+      });
+    }
+    async function initGoogle() {
+      if (!cfg.google_ready || !cfg.google_client_id || !googleEligible() || gisTried) return;
+      gisTried = true;
+      try {
+        await loadGis();
+        google.accounts.id.initialize({ client_id: cfg.google_client_id, callback: onGoogle, cancel_on_tap_outside: true });
+        gisReady = true;
+        renderGoogle();
+      } catch (_) { gisReady = false; }
+    }
+    function renderGoogle() {
+      const box = $('#g-official'), fb = $('#g-fallback');
+      if (!gisReady || !(mode === 'signin' || mode === 'signup')) { box.hidden = true; fb.hidden = false; return; }
+      fb.hidden = true; box.hidden = false; box.innerHTML = '';
+      const w = Math.max(200, Math.min(400, Math.floor(($('.g-wrap').clientWidth || 340))));
+      google.accounts.id.renderButton(box, {
+        type: 'standard', theme: 'filled_black', size: 'large', shape: 'pill',
+        logo_alignment: 'left', width: w, text: mode === 'signup' ? 'signup_with' : 'continue_with',
+      });
+    }
+    $('#g-fallback').addEventListener('click', () => {
+      if (!cfg.google_client_id) return showError('Google sign-in isn\u2019t set up yet. Add google_client_id to config/api_keys.json on your computer (see the README).');
+      if (!cfg.google_ready)     return showError('Google sign-in needs one extra Python package on your computer: pip install google-auth');
+      if (!googleEligible())     return showError('Google only allows sign-in from localhost or a domain name, not from ' + location.host + '. Open http://localhost:8000 on your computer, or use email here.');
+      showError('Couldn\u2019t reach Google. Check your internet connection and try again.');
+      gisTried = false; initGoogle();
+    });
+    async function onGoogle(resp) { gCred = resp && resp.credential; if (gCred) googleAuth(''); }
+    async function googleAuth(deviceCode) {
+      if (!gCred) return showError('Google sign-in expired. Please try again.');
+      setBusy(true);
+      const { data } = await post('/api/auth/google', { credential: gCred, device_code: deviceCode || undefined });
+      setBusy(false);
+      if (data.ok) return finish(data);
+      if (data.need_code) { showGoogleFinish(data.profile || {}); if (deviceCode) showError(data.error, 'f-code'); return; }
+      showError(data.error || 'Google sign-in failed. Please try again.');
+    }
+    function showGoogleFinish(p) {
+      setMode('gfinish');
+      $('#p-name').textContent = p.name || '';
+      $('#p-mail').textContent = p.email || '';
+      const img = $('#p-img'), ph = $('#p-ph');
+      ph.textContent = (p.name || p.email || '?').trim().charAt(0).toUpperCase();
+      if (p.picture) { img.src = p.picture; img.referrerPolicy = 'no-referrer'; img.hidden = false; ph.hidden = true; img.onerror = () => { img.hidden = true; ph.hidden = false; }; }
+      else { img.hidden = true; ph.hidden = false; }
+    }
+
+    /* ── boot ────────────────────────────────────────────────────────────── */
+    (async function boot() {
+      // 1. Known device? Reconnect silently.
+      const dev = store.get('jarvis_device_token');
+      if (dev) {
+        $('#veil').hidden = false;
+        try {
+          const r = await fetch('/api/device-login', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ device_token: dev }) });
+          const d = await r.json();
+          if (d.ok && d.token) {
+            sessionStorage.setItem('jarvis_key', d.key);
+            sessionStorage.setItem('jarvis_token', d.token);
+            if (d.user) sessionStorage.setItem('jarvis_user', JSON.stringify(d.user)); else sessionStorage.removeItem('jarvis_user');
+            location.replace('/'); return;
+          }
+        } catch (_) {}
+        store.del('jarvis_device_token');          // rejected (server restarted) — show the form
+        $('#veil').hidden = true;
+      }
+
+      // 2. What does this server offer?
+      try { const r = await fetch('/api/auth/config'); if (r.ok) cfg = Object.assign(cfg, await r.json()); } catch (_) {}
+
+      // First run (no accounts yet) or the /signup link -> "Create account"; otherwise "Sign in".
+      setMode(location.pathname === '/signup' || !cfg.has_accounts ? 'signup' : 'signin');
+      initGoogle();
+    })();
+  })();
+  </script>
+</body>
+</html>

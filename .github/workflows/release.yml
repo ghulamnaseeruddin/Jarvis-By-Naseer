@@ -1,0 +1,135 @@
+name: Release
+
+# Push a tag like v1.0.1 to build Windows, macOS (arm64 + x64) and Linux
+# installers and publish them as a GitHub Release. The website's download
+# buttons and "update available" notice read this release automatically —
+# nothing else to configure.
+on:
+  push:
+    tags: ["v*.*.*"]
+  workflow_dispatch:        # "Run workflow" button, for a test build without tagging
+
+permissions:
+  contents: write
+
+jobs:
+  # ── Windows ──────────────────────────────────────────────────────────────
+  windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pyinstaller
+      - name: Build with PyInstaller
+        run: pyinstaller packaging/windows.spec --noconfirm
+      - name: Verify the build actually runs
+        run: dist\JARVIS\JARVIS.exe --selftest
+      - name: Install Inno Setup
+        run: choco install innosetup -y --no-progress
+      - name: Build installer
+        shell: cmd
+        run: |
+          "C:\Program Files (x86)\Inno Setup 6\ISCC.exe" /DMyAppVersion=${{ github.ref_name }} packaging\windows\installer.iss
+      - uses: actions/upload-artifact@v4
+        with:
+          name: windows-installer
+          path: dist/JARVIS-windows-x64-setup.exe
+
+  # ── macOS ────────────────────────────────────────────────────────────────
+  macos:
+    strategy:
+      matrix:
+        include:
+          - runner: macos-15          # Apple silicon (arm64) — free on public repos
+            suffix: arm64
+          - runner: macos-15-intel    # Intel (x64) — free on public repos
+            suffix: x64
+    runs-on: ${{ matrix.runner }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pyinstaller
+      - name: Build .icns from the source iconset
+        run: iconutil -c icns packaging/macos/icon.iconset -o packaging/macos/icon.icns
+      - name: Build with PyInstaller
+        run: pyinstaller packaging/macos.spec --noconfirm
+      - name: Set the version from the git tag
+        if: github.ref_type == 'tag'
+        run: |
+          VER="${GITHUB_REF_NAME#v}"
+          /usr/libexec/PlistBuddy -c "Set :CFBundleShortVersionString $VER" dist/JARVIS.app/Contents/Info.plist
+          /usr/libexec/PlistBuddy -c "Set :CFBundleVersion $VER" dist/JARVIS.app/Contents/Info.plist
+      - name: Verify the build actually runs
+        run: ./dist/JARVIS.app/Contents/MacOS/JARVIS --selftest
+      - name: Package .dmg
+        run: |
+          chmod +x packaging/macos/build_dmg.sh
+          ./packaging/macos/build_dmg.sh dist/JARVIS.app "dist/JARVIS-macos-${{ matrix.suffix }}.dmg" "JARVIS"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: macos-${{ matrix.suffix }}-dmg
+          path: dist/JARVIS-macos-${{ matrix.suffix }}.dmg
+
+  # ── Linux ────────────────────────────────────────────────────────────────
+  linux:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - name: System libraries needed to build & run the GUI
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libportaudio2 libxcb-cursor0 libxkbcommon-x11-0 \
+            libegl1 libgl1 libglx-mesa0 xvfb
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pyinstaller
+      - name: Build with PyInstaller
+        run: pyinstaller packaging/linux.spec --noconfirm
+      - name: Verify the build actually runs (headless)
+        run: xvfb-run -a dist/JARVIS/jarvis-bin --selftest
+      - name: Assemble the release folder
+        run: |
+          mkdir -p pkg/JARVIS-linux-x64
+          cp -R dist/JARVIS pkg/JARVIS-linux-x64/JARVIS
+          cp packaging/linux/install.sh pkg/JARVIS-linux-x64/
+          cp config/jarvis.ico pkg/JARVIS-linux-x64/icon.ico 2>/dev/null || true
+          python3 -c "from PIL import Image; Image.open('config/jarvis.ico').save('pkg/JARVIS-linux-x64/icon.png')" || true
+          cd pkg && tar -czf ../dist/JARVIS-linux-x64.tar.gz JARVIS-linux-x64
+      - uses: actions/upload-artifact@v4
+        with:
+          name: linux-archive
+          path: dist/JARVIS-linux-x64.tar.gz
+
+  # ── Publish ──────────────────────────────────────────────────────────────
+  release:
+    needs: [windows, macos, linux]
+    if: startsWith(github.ref, 'refs/tags/v')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with: { path: artifacts }
+      - name: Flatten and checksum
+        run: |
+          mkdir -p out
+          find artifacts -type f \( -name "*.exe" -o -name "*.dmg" -o -name "*.tar.gz" \) -exec cp {} out/ \;
+          cd out && sha256sum * > SHA256SUMS.txt && ls -la
+      - name: Publish release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: out/*
+          generate_release_notes: true
+          name: Mark LIV ${{ github.ref_name }}

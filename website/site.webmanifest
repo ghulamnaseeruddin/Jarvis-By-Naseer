@@ -1,0 +1,13 @@
+{
+  "name": "Mark LIV — JARVIS",
+  "short_name": "Mark LIV",
+  "description": "A real-time voice AI assistant that can hear, see, speak and control your computer.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#05060a",
+  "theme_color": "#05060a",
+  "icons": [
+    { "src": "assets/img/favicon-32.png", "sizes": "32x32", "type": "image/png" },
+    { "src": "assets/img/apple-touch-icon.png", "sizes": "180x180", "type": "image/png" }
+  ]
+}

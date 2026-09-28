@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Privacy — Mark LIV</title>
+  <meta name="description" content="What Mark LIV and this website do — and don't do — with your data.">
+  <meta name="theme-color" content="#05060a">
+  <meta name="color-scheme" content="dark">
+  <link rel="canonical" href="https://example.com/privacy.html">
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+  <link rel="manifest" href="site.webmanifest">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Mark LIV">
+  <meta property="og:title" content="Privacy — Mark LIV">
+  <meta property="og:description" content="What Mark LIV and this website do — and don't do — with your data.">
+  <meta property="og:url" content="https://example.com/privacy.html">
+  <meta property="og:image" content="https://example.com/assets/img/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Privacy — Mark LIV">
+  <meta name="twitter:description" content="What Mark LIV and this website do — and don't do — with your data.">
+  <meta name="twitter:image" content="https://example.com/assets/img/og.png">
+  <script src="assets/js/boot.js"></script>
+  <link rel="stylesheet" href="assets/css/site.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="ambient" aria-hidden="true"><span class="a"></span><span class="b"></span></div>
+<header class="site-header">
+  <div class="container nav">
+    <a class="logo" href="index.html" aria-label="Mark LIV home"><span class="orb" aria-hidden="true"></span><b>MARK LIV</b><small>JARVIS</small></a>
+    <nav class="nav-links" id="nav-links" aria-label="Main">
+      <a href="index.html#features">Features</a><a href="index.html#how">How it works</a><a href="index.html#security">Security</a><a href="docs.html">Docs</a><a href="index.html#contact">Contact</a>
+      <a class="btn btn-primary" href="download.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Download</a>
+    </nav>
+    <a class="btn btn-primary" href="download.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Download</a>
+    <button class="nav-toggle" type="button" aria-label="Menu" aria-expanded="false" aria-controls="nav-links"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+  </div>
+</header>
+<main id="main">
+
+<section class="page-hero"><div class="container">
+  <span class="eyebrow">Legal</span><h1>Privacy</h1>
+  <p class="lead">Plain-language summary of what this website and the Mark LIV app do with your data.</p>
+</div></section>
+<div class="container"><div class="legal-prose">
+<p class="stamp">Last updated: September 24, 2026 &middot; Published by <span data-owner>Your Name</span></p>
+
+<h2>The short version</h2>
+<p>The app keeps your data on your computer. The one thing that leaves it is your conversation with Google&rsquo;s Gemini API while a session is open. This website does not use cookies, analytics or advertising trackers.</p>
+
+<h2>This website</h2>
+<ul>
+  <li><strong>No tracking.</strong> We don&rsquo;t run analytics, set cookies or load third-party fonts, scripts or ads.</li>
+  <li><strong>Hosting logs.</strong> Whoever hosts the site (for example GitHub Pages, Netlify or Cloudflare) may keep standard server logs such as IP address and page requested. That is governed by the host&rsquo;s own policy.</li>
+  <li><strong>Download pages</strong> ask GitHub&rsquo;s public API for the latest version number and file sizes. Your browser contacts GitHub when you view them.</li>
+  <li><strong>Contact form.</strong> What you type (name, email, message) is used only to reply to you. It is sent to the form service configured by the site owner, or opens in your own email app.</li>
+</ul>
+
+<h2>The Mark LIV app</h2>
+<ul>
+  <li><strong>Stored on your computer only:</strong> your API key and settings, dashboard accounts (email and a salted password hash), the dashboard&rsquo;s TLS certificate, and the assistant&rsquo;s memory of you. See the <a href="docs.html#data">data table</a>. There is no Mark LIV server and no telemetry.</li>
+  <li><strong>Sent to Google (Gemini API):</strong> your voice audio and text while a session is open, the assistant&rsquo;s replies, and any screen capture or webcam frame you ask it to look at. Google processes this under its own terms and privacy policy for the Gemini API. Nothing is streamed while you are muted, while it is asleep, or when the app is closed.</li>
+  <li><strong>Sent to other services when you use a skill:</strong> for example web searches go to the search provider, weather and flight lookups to their data sources, and messages to the messaging app you choose.</li>
+  <li><strong>Phone dashboard:</strong> works over your local network. Commands are AES-256 encrypted between the phone and your computer; the connection also uses a self-signed HTTPS certificate created on your machine. If you enable Google sign-in, your browser talks to Google to sign you in and your computer verifies Google&rsquo;s response; it stores your email, name and profile picture URL locally.</li>
+</ul>
+
+<h2>Your choices</h2>
+<ul>
+  <li>Delete <code>memory/long_term.json</code> (or use the memory panel) to make the assistant forget you.</li>
+  <li>Delete <code>config/accounts.json</code> to remove all dashboard accounts.</li>
+  <li>Revoke or regenerate your Gemini API key at <a href="https://aistudio.google.com" rel="noopener">aistudio.google.com</a> at any time.</li>
+</ul>
+
+<h2>Children</h2>
+<p>The assistant is not directed at children under 13, and Google&rsquo;s Gemini terms set their own age requirements.</p>
+
+<h2>Contact</h2>
+<p>Questions about this page: <a data-email href="#"></a>.</p>
+<p class="stamp">This is a plain-language description of how this edition works, not legal advice. Review and adapt it before publishing your own version.</p>
+</div></div>
+
+</main>
+<footer class="site-footer">
+  <div class="container">
+    <div class="foot-grid">
+      <div>
+        <a class="logo" href="index.html"><span class="orb" aria-hidden="true"></span><b>MARK LIV</b></a>
+        <p>A real-time voice AI that can hear, see, speak and control your computer. Free, private, and yours to run on Windows, macOS and Linux.</p>
+      </div>
+      <div><h4>Product</h4><ul>
+        <li><a href="index.html#features">Features</a></li><li><a href="index.html#how">How it works</a></li>
+        <li><a href="index.html#security">Security</a></li><li><a href="download.html">Download</a></li></ul></div>
+      <div><h4>Resources</h4><ul>
+        <li><a href="docs.html">Documentation</a></li><li><a href="docs.html#dashboard">Phone dashboard</a></li>
+        <li><a href="docs.html#plugins">Write a plugin</a></li><li><a href="docs.html#troubleshooting">Troubleshooting</a></li></ul></div>
+      <div><h4>Community</h4><ul>
+        <li><a data-repo href="#" rel="noopener">GitHub</a></li><li><a data-issues href="#" rel="noopener">Report a bug</a></li>
+        <li><a data-discussions href="#" rel="noopener">Discussions</a></li><li><a href="index.html#contact">Contact</a></li></ul></div>
+    </div>
+    <div class="foot-legal">
+      <span>&copy; <span data-year>2026</span> <span data-owner>Your Name</span> &middot; <a href="privacy.html">Privacy</a> &middot; <a href="terms.html">Terms &amp; license</a></span>
+      <span>Mark LIV is created by <a href="https://www.youtube.com/@FatihMakes" rel="noopener">FatihMakes</a> and licensed under <a href="https://creativecommons.org/licenses/by-nc/4.0/" rel="noopener">CC BY-NC 4.0</a>. This edition includes modifications. Not affiliated with or endorsed by Google. Gemini is a trademark of Google LLC.</span>
+    </div>
+  </div>
+</footer>
+<script src="assets/js/config.js"></script>
+<script src="assets/js/site.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Documentation — Mark LIV</title>
+  <meta name="description" content="Install Mark LIV, set up your Gemini key, pair your phone, enable Google sign-in, write plugins and fix common problems.">
+  <meta name="theme-color" content="#05060a">
+  <meta name="color-scheme" content="dark">
+  <link rel="canonical" href="https://example.com/docs.html">
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+  <link rel="manifest" href="site.webmanifest">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Mark LIV">
+  <meta property="og:title" content="Documentation — Mark LIV">
+  <meta property="og:description" content="Install Mark LIV, set up your Gemini key, pair your phone, enable Google sign-in, write plugins and fix common problems.">
+  <meta property="og:url" content="https://example.com/docs.html">
+  <meta property="og:image" content="https://example.com/assets/img/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Documentation — Mark LIV">
+  <meta name="twitter:description" content="Install Mark LIV, set up your Gemini key, pair your phone, enable Google sign-in, write plugins and fix common problems.">
+  <meta name="twitter:image" content="https://example.com/assets/img/og.png">
+  <script src="assets/js/boot.js"></script>
+  <link rel="stylesheet" href="assets/css/site.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="ambient" aria-hidden="true"><span class="a"></span><span class="b"></span></div>
+<header class="site-header">
+  <div class="container nav">
+    <a class="logo" href="index.html" aria-label="Mark LIV home"><span class="orb" aria-hidden="true"></span><b>MARK LIV</b><small>JARVIS</small></a>
+    <nav class="nav-links" id="nav-links" aria-label="Main">
+      <a href="index.html#features">Features</a><a href="index.html#how">How it works</a><a href="index.html#security">Security</a><a href="docs.html" aria-current="page">Docs</a><a href="index.html#contact">Contact</a>
+      <a class="btn btn-primary" href="download.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Download</a>
+    </nav>
+    <a class="btn btn-primary" href="download.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Download</a>
+    <button class="nav-toggle" type="button" aria-label="Menu" aria-expanded="false" aria-controls="nav-links"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+  </div>
+</header>
+<main id="main">
+
+<section class="page-hero"><div class="container">
+  <span class="eyebrow">Documentation</span>
+  <h1>Learn Mark LIV.</h1>
+  <p class="lead">Install it, talk to it, control it from your phone, and teach it new skills.</p>
+</div></section>
+
+<div class="container docs">
+<aside class="side" aria-label="Documentation menu">
+  <button class="side-toggle" type="button" aria-expanded="false">Browse the docs <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg></button>
+  <div class="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><input id="doc-search" type="search" placeholder="Search the docs" aria-label="Search the docs" autocomplete="off"></div>
+  <div class="groups">
+    <h5>Getting started</h5><ul><li><a href="#intro">What is Mark LIV</a></li><li><a href="#quick-start">Quick start</a></li><li><a href="#requirements">Requirements</a></li><li><a href="#install">Installation</a></li><li><a href="#first-launch">First launch</a></li></ul>
+    <h5>Using JARVIS</h5><ul><li><a href="#using">Talking to JARVIS</a></li><li><a href="#skills">Skills reference</a></li><li><a href="#memory">Memory, undo &amp; confirmations</a></li><li><a href="#safety">Safety notes</a></li></ul>
+    <h5>Phone dashboard</h5><ul><li><a href="#dashboard">Pair your phone</a></li><li><a href="#accounts">Accounts</a></li><li><a href="#google-signin">Google sign-in</a></li></ul>
+    <h5>Extending</h5><ul><li><a href="#plugins">Write a plugin</a></li><li><a href="#config">Configuration</a></li></ul>
+    <h5>Reference</h5><ul><li><a href="#data">Your data</a></li><li><a href="#troubleshooting">Troubleshooting</a></li><li><a href="#build">Build &amp; release</a></li><li><a href="#license">License</a></li></ul>
+    <p class="empty" hidden>No sections match your search.</p>
+  </div>
+</aside>
+<article class="prose">
+
+<section id="intro">
+  <h2>What is Mark LIV?</h2>
+  <p>Mark LIV is a real-time voice assistant that runs on your own computer. It hears you, sees your screen or webcam when you ask, answers out loud, and can act &mdash; opening apps, changing settings, searching the web, managing files and setting reminders. Conversation runs on Google&rsquo;s <strong>Gemini Live API</strong>, so you need a free API key; everything else (memory, settings, accounts) stays on your machine.</p>
+  <p>Its window is called <strong>JARVIS</strong>: a HUD with an animated face (or a reactor-core display), a waveform, a log of the conversation and a settings drawer.</p>
+</section>
+
+<section id="quick-start">
+  <h2>Quick start</h2>
+  <ol>
+    <li><a href="download.html">Download</a> and install for your operating system (see <a href="#install">Installation</a>).</li>
+    <li>Get a free key at <a href="https://aistudio.google.com/apikey" rel="noopener">Google AI Studio</a>.</li>
+    <li>Start JARVIS, paste the key, confirm your operating system, and press <strong>Continue</strong>.</li>
+    <li>Hold <kbd>Ctrl</kbd> + <kbd>Space</kbd> (once <em>push-to-talk</em> is on) or simply talk, and say something like <em>&ldquo;What&rsquo;s the weather today?&rdquo;</em></li>
+  </ol>
+</section>
+
+<section id="requirements">
+  <h2>System requirements</h2>
+  <div class="table-wrap"><table>
+    <tr><th>Requirement</th><th>Details</th></tr>
+    <tr><td>Operating system</td><td>Windows 10 / 11 (64-bit) &middot; macOS (Apple silicon or Intel) &middot; 64-bit Linux</td></tr>
+    <tr><td>Microphone &amp; speakers</td><td>Required for voice. You can also type.</td></tr>
+    <tr><td>API key</td><td>A free Gemini API key, entered on first launch</td></tr>
+    <tr><td>Internet</td><td>Required &mdash; the conversation runs on Gemini Live</td></tr>
+    <tr><td>GPU</td><td><strong>Not required.</strong> The avatar is drawn in software.</td></tr>
+    <tr><td>Running from source</td><td>Python 3.11, 3.12 or 3.13</td></tr>
+  </table></div>
+</section>
+
+<section id="install">
+  <h2>Installation</h2>
+  <div class="ostabs"><div role="tablist" aria-label="Operating system"><button role="tab" id="t-windows" data-os="windows" aria-controls="p-windows" aria-selected="false">Windows</button><button role="tab" id="t-mac" data-os="mac" aria-controls="p-mac" aria-selected="false">macOS</button><button role="tab" id="t-linux" data-os="linux" aria-controls="p-linux" aria-selected="false">Linux</button></div><div role="tabpanel" id="p-windows" aria-labelledby="t-windows" hidden>
+  <ol>
+   <li>Download <code>JARVIS-windows-x64-setup.exe</code> from the <a href="download.html">download page</a>.</li>
+   <li>Run it. If Windows SmartScreen says <em>&ldquo;Windows protected your PC&rdquo;</em>, choose <strong>More info &rarr; Run anyway</strong> (the installer isn&rsquo;t code-signed).</li>
+   <li>Follow the wizard. JARVIS installs for your user account only &mdash; no administrator rights needed.</li>
+   <li>Start it from the Start menu. Tick <em>Start JARVIS when I sign in</em> during setup if you want it always ready.</li>
+  </ol>
+  <p>To remove it, use <strong>Settings &rarr; Apps</strong>. Your settings and memory are kept in the install folder; delete <code>%LOCALAPPDATA%\Programs\JARVIS</code> afterwards to erase them.</p></div><div role="tabpanel" id="p-mac" aria-labelledby="t-mac" hidden>
+  <ol>
+   <li>Download the <code>.dmg</code> that matches your Mac: <strong>arm64</strong> for Apple silicon (M1 or newer), <strong>x64</strong> for Intel. Not sure? Apple menu &rarr; <em>About This Mac</em>.</li>
+   <li>Open the disk image and drag <strong>JARVIS</strong> onto <strong>Applications</strong>.</li>
+   <li>Open it from Applications. macOS will say it can&rsquo;t verify the developer: <strong>right-click JARVIS &rarr; Open &rarr; Open</strong>, or go to <em>System Settings &rarr; Privacy &amp; Security &rarr; Open Anyway</em>.</li>
+   <li>Allow the permissions it asks for: <strong>Microphone</strong> (voice), <strong>Screen Recording</strong> (looking at your screen), <strong>Accessibility</strong> (controlling apps) and <strong>Camera</strong> (optional).</li>
+  </ol>
+  <div class="codeblock has-lang"><span class="lang">terminal</span><pre><code>xattr -dr com.apple.quarantine /Applications/JARVIS.app</code></pre></div>
+  <p>The command above is the terminal equivalent of &ldquo;Open Anyway&rdquo;. On first launch JARVIS copies itself to <code>~/Library/Application Support/JARVIS</code>, which is where your settings and memory live &mdash; updates keep them.</p></div><div role="tabpanel" id="p-linux" aria-labelledby="t-linux" hidden>
+  <ol>
+   <li>Install the two system libraries the app needs (Debian / Ubuntu shown):</li>
+  </ol>
+  <div class="codeblock has-lang"><span class="lang">bash</span><pre><code>sudo apt install libportaudio2 libxcb-cursor0 libxkbcommon-x11-0</code></pre></div>
+  <ol start="2">
+   <li>Download <code>JARVIS-linux-x64.tar.gz</code>, then extract and install:</li>
+  </ol>
+  <div class="codeblock has-lang"><span class="lang">bash</span><pre><code>tar -xzf JARVIS-linux-x64.tar.gz
+cd JARVIS-linux-x64
+./install.sh</code></pre></div>
+  <ol start="3">
+   <li>Open <strong>JARVIS</strong> from your applications menu, or run <code>jarvis</code> in a terminal.</li>
+  </ol>
+  <p>It installs to <code>~/.local/share/jarvis</code> and needs no root access. <code>./uninstall.sh</code> removes it and keeps your settings.</p></div></div>
+  <h3>Run from source</h3>
+  <p>Prefer Python? Clone the project and let the setup script install exactly what your OS needs.</p>
+  <div class="codeblock has-lang"><span class="lang">bash</span><pre><code>git clone https://github.com/YOUR-USERNAME/Mark-LIV.git
+cd Mark-LIV
+python setup.py      # installs dependencies for YOUR operating system
+python main.py</code></pre></div>
+  <p>The source install also supports the optional <strong>&ldquo;Hey Jarvis&rdquo; wake word</strong> (<code>pip install openwakeword</code>, or one click from the settings drawer). The packaged installers leave the wake word out to keep the download small; push-to-talk works everywhere.</p>
+</section>
+
+<section id="first-launch">
+  <h2>First launch</h2>
+  <h3>1. Add your Gemini API key</h3>
+  <p>A setup screen asks for your key. Create one for free at <a href="https://aistudio.google.com/apikey" rel="noopener">aistudio.google.com/apikey</a> and paste it in. It is saved on your computer in <code>config/api_keys.json</code> (plain text &mdash; treat the file like a password).</p>
+  <h3>2. Confirm your operating system</h3>
+  <p>The same screen shows three buttons &mdash; <strong>Windows</strong>, <strong>macOS</strong>, <strong>Linux</strong>. JARVIS detects your system and pre-selects it, and you can change it before continuing. This choice tells the assistant which native tools to use for volume, brightness, reminders and app launching.</p>
+  <h3>3. Say hello</h3>
+  <p>The HUD wakes up and greets you. Everything after this is a conversation.</p>
+</section>
+
+<section id="using">
+  <h2>Talking to JARVIS</h2>
+  <div class="table-wrap"><table>
+    <tr><th>Feature</th><th>How to use it</th></tr>
+    <tr><td>Voice</td><td>Just talk. The waveform shows your mic while listening and JARVIS while speaking.</td></tr>
+    <tr><td>Keyboard</td><td>Type in the input bar &mdash; voice and keyboard work together.</td></tr>
+    <tr><td>Push-to-talk</td><td>Turn on <strong>&#9881; &rarr; PUSH-TO-TALK</strong>, then hold <kbd>Ctrl</kbd> + <kbd>Space</kbd>. The mic is closed the rest of the time. It is a true global hotkey on Windows; on macOS and Linux it works while the JARVIS window is focused.</td></tr>
+    <tr><td>Wake word</td><td>Source install only: say &ldquo;Hey Jarvis&rdquo;. It sleeps after two minutes of silence and never streams audio while asleep.</td></tr>
+    <tr><td>Voices</td><td>&#9881; &rarr; pick one of five Gemini voices &mdash; it switches live, and the conversation carries on.</td></tr>
+    <tr><td>Audio devices</td><td>&#9881; &rarr; <strong>AUDIO DEVICES</strong> to choose the microphone and speakers by name.</td></tr>
+    <tr><td>HUD &amp; colour</td><td>&#9881; &rarr; <strong>HUD</strong> switches between the animated head and the reactor core; the hue wheel recolours everything.</td></tr>
+    <tr><td>Name</td><td>Rename the assistant, and tell it your own name, from the settings drawer.</td></tr>
+  </table></div>
+</section>
+
+<section id="skills">
+  <h2>Skills reference</h2>
+  <p>Skills are chosen by the AI from what you say &mdash; there are no commands to memorise. These are the built-in ones:</p>
+  <div class="table-wrap"><table>
+    <tr><th>Skill</th><th>What it does</th></tr>
+    <tr><td>web_search</td><td>News, research, prices and comparisons using Gemini grounding, with a DuckDuckGo fallback.</td></tr>
+    <tr><td>screen_processor</td><td>Looks at your screen or webcam and describes or answers questions about it.</td></tr>
+    <tr><td>open_app &middot; desktop</td><td>Launches applications; taskbar and desktop operations.</td></tr>
+    <tr><td>computer_settings</td><td>Volume, brightness, WiFi, dark mode and power. Shutdown, restart and WiFi wait for your confirmation.</td></tr>
+    <tr><td>computer_control</td><td>Keyboard shortcuts, mouse and window management.</td></tr>
+    <tr><td>browser_control</td><td>Opens sites, navigates tabs, interacts with the browser.</td></tr>
+    <tr><td>file_controller &middot; file_processor</td><td>Move, rename, create and organise files (undoable); read and summarise PDF, Word, PowerPoint and spreadsheet files.</td></tr>
+    <tr><td>reminder</td><td>Native scheduled notifications: Task Scheduler, LaunchAgent or systemd.</td></tr>
+    <tr><td>send_message</td><td>Compose and send messages through WhatsApp, Telegram and similar apps.</td></tr>
+    <tr><td>youtube_video</td><td>Search, play and control YouTube.</td></tr>
+    <tr><td>weather_report &middot; flight_finder</td><td>Live weather and flight prices.</td></tr>
+    <tr><td>game_updater</td><td>Checks for and starts Steam and Epic Games updates.</td></tr>
+    <tr><td>code_helper &middot; dev_agent</td><td>Code review, debugging and generation; developer task agent.</td></tr>
+    <tr><td>system_monitor</td><td>CPU, RAM, GPU and temperature, with spoken alerts.</td></tr>
+    <tr><td>proactive &middot; background_monitor</td><td>Time-aware check-ins, a morning briefing, and daily watching of topics you choose.</td></tr>
+  </table></div>
+  <p>Some skills need extra setup or platform tools (for example Gmail or Calendar plugins need your own Google OAuth credentials).</p>
+</section>
+
+<section id="memory">
+  <h2>Memory, undo &amp; confirmations</h2>
+  <h3>Memory</h3>
+  <p>JARVIS remembers your projects, preferences and context between sessions. Nothing is deleted automatically; the prompt carries a compact core and the rest is looked up on demand. Open <strong>&#9881; &rarr; MEMORY</strong> to see every stored fact and remove any of it. It all lives in <code>memory/long_term.json</code> &mdash; delete the file to make it forget everything.</p>
+  <h3>Undo</h3>
+  <p>Say <strong>&ldquo;undo&rdquo;</strong> in any language to reverse the last action: file move, rename, create, copy, write or delete, desktop organising, and volume, brightness or dark-mode changes. Files over 1&nbsp;MB are excluded from write-undo, and where a setting can&rsquo;t be read back beforehand, nothing is registered &mdash; it never guesses.</p>
+  <h3>Confirmations</h3>
+  <p>Shutdown, restart and WiFi changes show a banner on the HUD and run only if <strong>you</strong> press <strong>CONFIRM</strong>. The AI cannot confirm on your behalf.</p>
+</section>
+
+<section id="safety">
+  <h2>Safety notes</h2>
+  <div class="callout"><p><strong>JARVIS can act on your computer.</strong> That is the point, and it deserves care.</p></div>
+  <ul>
+    <li>Keep <code>config/api_keys.json</code> private &mdash; it holds your API key in plain text.</li>
+    <li>Only pair phones and create dashboard accounts you trust; an account can drive your computer.</li>
+    <li>Sensitive actions (shutdown, restart, WiFi) always ask you first, but review what you ask it to do with files.</li>
+    <li>While a session is open your voice, and any image you ask it to look at, is streamed to Google&rsquo;s Gemini API. Mute or close the app to stop. See <a href="privacy.html">privacy</a>.</li>
+  </ul>
+</section>
+
+<section id="dashboard">
+  <h2>Pair your phone</h2>
+  <p>The phone dashboard lets you chat with JARVIS, send it files and speak commands from any phone or tablet on the same Wi-Fi network.</p>
+  <ol>
+    <li>In the JARVIS window press <strong>Remote Control</strong>. It shows a QR code, a 6-character code and the address, for example <code>https://192.168.1.20:8000</code>.</li>
+    <li>On your phone, scan the QR code &mdash; you are signed in automatically. Or open the address, choose <strong>Quick connect</strong> and type the code. Each code works once and expires after 10 minutes.</li>
+    <li>The first time, your browser warns about the certificate. JARVIS creates its own self-signed certificate on your computer; choose <strong>Advanced &rarr; Continue</strong>. Traffic stays on your network.</li>
+  </ol>
+  <p>Uploads from your phone land in <code>Downloads/JARVIS Uploads</code> (up to 500&nbsp;MB per file). Commands from the dashboard are AES-256 encrypted.</p>
+  <div class="callout"><p><strong>Voice from a phone</strong> needs a secure page. Because the dashboard uses a self-signed certificate, Chrome on Android may need a one-time flag; the dashboard shows step-by-step instructions the first time you tap the microphone.</p></div>
+</section>
+
+<section id="accounts">
+  <h2>Accounts</h2>
+  <p>Beyond one-time codes, the dashboard has proper <strong>Sign in</strong> and <strong>Create account</strong> pages so your phone can reconnect without scanning again.</p>
+  <ul>
+    <li><strong>Creating an account needs the device code</strong> shown under Remote Control. It proves you are at the computer &mdash; nobody else on your Wi-Fi can register themselves.</li>
+    <li>After that, sign in with your email and password. No code is needed again.</li>
+    <li>Passwords are stored as salted <code>scrypt</code> hashes in <code>config/accounts.json</code> on your computer. Failed attempts are rate-limited.</li>
+    <li>Use the avatar menu (top right of the dashboard) to <strong>Sign out</strong>, which also forgets that phone.</li>
+  </ul>
+</section>
+
+<section id="google-signin">
+  <h2>Google sign-in</h2>
+  <p>Optional, free, about five minutes.</p>
+  <ol>
+    <li>In <a href="https://console.cloud.google.com/apis/credentials" rel="noopener">Google Cloud Console</a>, create an <strong>OAuth client ID</strong> of type <em>Web application</em> (set up the consent screen first; while it is in <em>Testing</em>, add your own Google account as a test user).</li>
+    <li>Under <strong>Authorized JavaScript origins</strong> add <code>https://localhost:8000</code> and <code>http://localhost:8000</code>. No redirect URI is needed.</li>
+    <li>Put the client ID in <code>config/api_keys.json</code> (or set the environment variable <code>JARVIS_GOOGLE_CLIENT_ID</code>) and restart JARVIS:</li>
+  </ol>
+  <div class="codeblock has-lang"><span class="lang">json</span><pre><code>{
+  &quot;google_client_id&quot;: &quot;1234567890-abc123.apps.googleusercontent.com&quot;
+}</code></pre></div>
+  <div class="callout warn"><p><strong>Where it works.</strong> Google only allows sign-in from <code>localhost</code> or a real domain name &mdash; never from a bare address like <code>192.168.1.20</code>. So the Google button works in the browser on your computer at <code>https://localhost:8000</code>. To use it from a phone, serve the dashboard under a domain (a Cloudflare or Tailscale tunnel, or your own domain pointing at the PC) and add that origin in step 2. On a plain LAN address the page says so and you can use email and password or the QR code.</p></div>
+  <p>A brand-new Google account still needs the device code once, exactly like an email account.</p>
+</section>
+
+<section id="plugins">
+  <h2>Write a plugin</h2>
+  <p>A plugin is one Python file in the <code>plugins</code> folder. JARVIS discovers it at startup &mdash; nothing else to register. Files starting with an underscore are ignored, and a plugin that fails to load is skipped without affecting the rest.</p>
+  <div class="codeblock has-lang"><span class="lang">python</span><pre><code>PLUGIN = {
+    &quot;name&quot;: &quot;coin_flip&quot;,                       # snake_case, unique
+    &quot;description&quot;: &quot;Flip a coin when the user asks for heads or tails.&quot;,
+    &quot;parameters&quot;: {&quot;type&quot;: &quot;OBJECT&quot;, &quot;properties&quot;: {}, &quot;required&quot;: []},
+}
+
+def run(parameters: dict, player=None, session_memory=None) -&gt; str:
+    import random
+    result = random.choice([&quot;heads&quot;, &quot;tails&quot;])
+    if player:
+        player.write_log(f&quot;JARVIS: {result}&quot;)
+    return f&quot;It&#x27;s {result}.&quot;       # this text is spoken back to the user</code></pre></div>
+  <p>The <strong>description</strong> is what the AI reads to decide when to call your plugin &mdash; be specific about trigger phrases. Return a short sentence; never raise an exception (return a spoken error instead). <code>plugins/_template.py</code> is a fuller starting point.</p>
+  <p>In the installed app, put plugins in the <code>plugins</code> folder inside the install location (see <a href="#config">Configuration</a>). Third-party libraries a plugin needs must already be bundled; the source install has no such limit.</p>
+</section>
+
+<section id="config">
+  <h2>Configuration</h2>
+  <p>Settings live in <code>config/api_keys.json</code>. Most are managed from the settings drawer; the ones you may edit by hand:</p>
+  <div class="table-wrap"><table>
+    <tr><th>Key</th><th>Meaning</th></tr>
+    <tr><td><code>gemini_api_key</code></td><td>Your Gemini API key.</td></tr>
+    <tr><td><code>os_system</code></td><td><code>"windows"</code>, <code>"mac"</code> or <code>"linux"</code> &mdash; the operating system JARVIS should assume.</td></tr>
+    <tr><td><code>google_client_id</code></td><td>Enables Google sign-in on the dashboard. Public value, not a secret.</td></tr>
+  </table></div>
+  <p><strong>Where is the folder?</strong></p>
+  <div class="table-wrap"><table>
+    <tr><th>Install</th><th>Location</th></tr>
+    <tr><td>Windows installer</td><td><code>%LOCALAPPDATA%\Programs\JARVIS</code></td></tr>
+    <tr><td>macOS</td><td><code>~/Library/Application Support/JARVIS/app</code></td></tr>
+    <tr><td>Linux</td><td><code>~/.local/share/jarvis</code></td></tr>
+    <tr><td>From source</td><td>The project folder</td></tr>
+  </table></div>
+  <p>Command-line helpers for installed builds: <code>JARVIS --version</code>, <code>JARVIS --selftest</code> (checks the install) and <code>JARVIS --install-browser</code> (downloads the browser Browser Control uses).</p>
+</section>
+
+<section id="data">
+  <h2>Your data</h2>
+  <p>There is no Mark LIV server, no telemetry and no account needed to use the app.</p>
+  <div class="table-wrap"><table>
+    <tr><th>What</th><th>Where</th><th>Notes</th></tr>
+    <tr><td>API key, plugin credentials</td><td><code>config/api_keys.json</code></td><td>Plain text. Anyone with your user account can read it.</td></tr>
+    <tr><td>Dashboard accounts</td><td><code>config/accounts.json</code></td><td>Emails and salted password hashes.</td></tr>
+    <tr><td>Dashboard certificate + key</td><td><code>config/certs/</code></td><td>Generated locally, self-signed.</td></tr>
+    <tr><td>What it remembers about you</td><td><code>memory/long_term.json</code></td><td>Delete to forget everything.</td></tr>
+  </table></div>
+  <p>The one thing that leaves your computer is the conversation with Google&rsquo;s Gemini Live API while a session is open. Details: <a href="privacy.html">Privacy</a>.</p>
+</section>
+
+<section id="troubleshooting">
+  <h2>Troubleshooting</h2>
+  <h3>JARVIS can&rsquo;t hear me</h3>
+  <p>Open <strong>&#9881; &rarr; AUDIO DEVICES</strong> and pick your microphone by name. On macOS check <em>System Settings &rarr; Privacy &amp; Security &rarr; Microphone</em>; on Windows <em>Settings &rarr; Privacy &rarr; Microphone</em>.</p>
+  <h3>Windows: &ldquo;Windows protected your PC&rdquo;</h3>
+  <p>Choose <strong>More info &rarr; Run anyway</strong>. The installer isn&rsquo;t code-signed. You can compare its SHA-256 checksum with <code>SHA256SUMS.txt</code> on the release page first (see <a href="download.html#verify">Verify your download</a>).</p>
+  <h3>macOS: &ldquo;cannot be opened because the developer cannot be verified&rdquo;</h3>
+  <p>Right-click the app &rarr; <strong>Open</strong> &rarr; <strong>Open</strong>, or <em>System Settings &rarr; Privacy &amp; Security &rarr; Open Anyway</em>. Move it to Applications before the first launch.</p>
+  <h3>Linux: it won&rsquo;t start or has no sound</h3>
+  <p>Install the libraries: <code>sudo apt install libportaudio2 libxcb-cursor0 libxkbcommon-x11-0</code>. Mouse and keyboard control work best in an X11 session; some desktop-control features are limited on Wayland.</p>
+  <h3>My phone can&rsquo;t connect</h3>
+  <ul>
+    <li>Phone and computer must be on the same Wi-Fi. &ldquo;Guest&rdquo; networks often block devices from each other.</li>
+    <li>Allow JARVIS through your firewall (inbound TCP port 8000).</li>
+    <li>Use the address shown in Remote Control, and accept the certificate warning once.</li>
+    <li>If port 8000 is taken by another program, close that program and restart JARVIS.</li>
+  </ul>
+  <h3>The Google button is greyed out or shows a message</h3>
+  <p>Read <a href="#google-signin">Google sign-in</a> &mdash; you need a client ID, and Google only works from <code>localhost</code> or a domain, not a LAN address.</p>
+  <h3>Browser Control says a browser is missing</h3>
+  <p>Installed builds: run <code>JARVIS --install-browser</code> once. From source: <code>python -m playwright install chromium</code>.</p>
+  <h3>Start fresh</h3>
+  <p>Delete <code>config/api_keys.json</code> to see the setup screen again, or <code>memory/long_term.json</code> to clear its memory.</p>
+</section>
+
+<section id="build">
+  <h2>Build &amp; release</h2>
+  <p>Maintainers: pushing a tag such as <code>v1.0.1</code> makes GitHub Actions build the Windows installer, the two macOS disk images and the Linux archive, publish them with a <code>SHA256SUMS.txt</code>, and the website&rsquo;s download buttons pick them up automatically. The full guide is <code>packaging/README.md</code> in the repository.</p>
+  <div class="codeblock has-lang"><span class="lang">bash</span><pre><code>git tag v1.0.1
+git push origin v1.0.1</code></pre></div>
+</section>
+
+<section id="license">
+  <h2>License</h2>
+  <p>Mark LIV is created by <a href="https://www.youtube.com/@FatihMakes" rel="noopener">FatihMakes</a> and licensed under <a href="https://creativecommons.org/licenses/by-nc/4.0/" rel="noopener">Creative Commons Attribution-NonCommercial 4.0</a>. You may use, share and adapt it for <strong>non-commercial</strong> purposes with credit and a note of what you changed. Read the full <a href="terms.html">terms &amp; license</a> page.</p>
+</section>
+
+</article>
+</div>
+
+</main>
+<footer class="site-footer">
+  <div class="container">
+    <div class="foot-grid">
+      <div>
+        <a class="logo" href="index.html"><span class="orb" aria-hidden="true"></span><b>MARK LIV</b></a>
+        <p>A real-time voice AI that can hear, see, speak and control your computer. Free, private, and yours to run on Windows, macOS and Linux.</p>
+      </div>
+      <div><h4>Product</h4><ul>
+        <li><a href="index.html#features">Features</a></li><li><a href="index.html#how">How it works</a></li>
+        <li><a href="index.html#security">Security</a></li><li><a href="download.html">Download</a></li></ul></div>
+      <div><h4>Resources</h4><ul>
+        <li><a href="docs.html">Documentation</a></li><li><a href="docs.html#dashboard">Phone dashboard</a></li>
+        <li><a href="docs.html#plugins">Write a plugin</a></li><li><a href="docs.html#troubleshooting">Troubleshooting</a></li></ul></div>
+      <div><h4>Community</h4><ul>
+        <li><a data-repo href="#" rel="noopener">GitHub</a></li><li><a data-issues href="#" rel="noopener">Report a bug</a></li>
+        <li><a data-discussions href="#" rel="noopener">Discussions</a></li><li><a href="index.html#contact">Contact</a></li></ul></div>
+    </div>
+    <div class="foot-legal">
+      <span>&copy; <span data-year>2026</span> <span data-owner>Your Name</span> &middot; <a href="privacy.html">Privacy</a> &middot; <a href="terms.html">Terms &amp; license</a></span>
+      <span>Mark LIV is created by <a href="https://www.youtube.com/@FatihMakes" rel="noopener">FatihMakes</a> and licensed under <a href="https://creativecommons.org/licenses/by-nc/4.0/" rel="noopener">CC BY-NC 4.0</a>. This edition includes modifications. Not affiliated with or endorsed by Google. Gemini is a trademark of Google LLC.</span>
+    </div>
+  </div>
+</footer>
+<script src="assets/js/config.js"></script>
+<script src="assets/js/site.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,36 @@
+name: Deploy website
+
+# Publishes the /website folder to GitHub Pages whenever it changes on main.
+# Optional — only runs once Pages is turned on for this repo (Settings ->
+# Pages -> Source: GitHub Actions). Ignore this file if you host the site
+# elsewhere (Netlify, Vercel, Cloudflare Pages all work just as well: point
+# them at the /website folder with no build command).
+on:
+  push:
+    branches: [main]
+    paths: ["website/**"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: website
+      - id: deployment
+        uses: actions/deploy-pages@v4
