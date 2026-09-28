@@ -2,7 +2,8 @@
 import json, os, platform
 from pathlib import Path
 
-_CONFIG_PATH = Path(__file__).parent / "api_keys.json"
+_CONFIG_PATH = (Path(os.environ["JARVIS_HOME"]) / "config" / "api_keys.json"
+                if os.environ.get("JARVIS_HOME") else Path(__file__).parent / "api_keys.json")
 
 def _platform_os() -> str:
     """Auto-detect OS when config file is absent."""

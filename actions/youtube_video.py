@@ -38,7 +38,7 @@ from config import get_os, is_windows, is_mac, is_linux
 
 def _get_base_dir() -> Path:
     if getattr(sys, "frozen", False):
-        return Path(sys.executable).parent
+        return Path(__import__("os").environ.get("JARVIS_HOME") or Path(sys.executable).parent)
     return Path(__file__).resolve().parent.parent
 
 

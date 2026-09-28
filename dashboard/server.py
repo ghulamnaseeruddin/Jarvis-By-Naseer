@@ -39,7 +39,7 @@ except Exception:
     pass
 
 if getattr(sys, "frozen", False):
-    BASE_DIR = Path(sys.executable).parent          # installed build: next to the app
+    BASE_DIR = Path(__import__("os").environ.get("JARVIS_HOME") or Path(sys.executable).parent)          # installed build: next to the app
 else:
     BASE_DIR = Path(__file__).resolve().parent.parent
 STATIC_DIR  = Path(__file__).parent / "static"

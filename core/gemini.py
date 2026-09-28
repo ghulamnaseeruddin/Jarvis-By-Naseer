@@ -72,7 +72,7 @@ import threading
 from pathlib import Path
 
 if getattr(sys, "frozen", False):
-    _BASE = Path(sys.executable).parent
+    _BASE = Path(__import__("os").environ.get("JARVIS_HOME") or Path(sys.executable).parent)
 else:
     _BASE = Path(__file__).resolve().parent.parent
 

@@ -41,7 +41,7 @@ except Exception:      # pragma: no cover — HUD must never die over cosmetics
 
 def _base_dir() -> Path:
     if getattr(sys, "frozen", False):
-        return Path(sys.executable).parent
+        return Path(__import__("os").environ.get("JARVIS_HOME") or Path(sys.executable).parent)
     return Path(__file__).resolve().parent
 
 BASE_DIR   = _base_dir()

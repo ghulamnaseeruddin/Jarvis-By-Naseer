@@ -32,7 +32,7 @@ _SENT_END = re.compile(r'(?<=[.!?])\s+|(?<=\n)\s*\n')
 
 def get_base_dir() -> Path:
     if getattr(sys, "frozen", False):
-        return Path(sys.executable).parent
+        return Path(__import__("os").environ.get("JARVIS_HOME") or Path(sys.executable).parent)
     return Path(__file__).resolve().parent.parent
 
 

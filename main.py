@@ -34,6 +34,34 @@ for _stream in ("stdout", "stderr"):
 
 # ─────────────────────────────────────────────────────────────────────────────
 
+# ── Microsoft Store (MSIX) builds ────────────────────────────────────────────
+# The Store installs the app into a READ-ONLY folder (…\WindowsApps\…), but
+# JARVIS saves your API key, memory and dashboard accounts next to itself.
+# So in a Store build only, keep the program files where they are and give the
+# app a normal writable home in %LOCALAPPDATA%\JARVIS (copying the few files it
+# reads at runtime once per installed version). Every other install type skips
+# this block entirely, so nothing changes for them.
+if getattr(_sys, "frozen", False) and "windowsapps" in _sys.executable.lower():
+    try:
+        import os as _os, shutil as _shutil
+        from pathlib import Path as _P
+        _src  = _P(_sys.executable).parent
+        _home = _P(_os.environ.get("LOCALAPPDATA") or _P.home()) / "JARVIS"
+        _home.mkdir(parents=True, exist_ok=True)
+        _stamp = _home / ".assets_from"
+        if not _stamp.exists() or _stamp.read_text(encoding="utf-8") != str(_src):
+            for _rel in ("core/prompt.txt", "core/face_model.obj", "config/jarvis.ico"):
+                if (_src / _rel).is_file():
+                    (_home / _rel).parent.mkdir(parents=True, exist_ok=True)
+                    _shutil.copy2(_src / _rel, _home / _rel)
+            for _rel in ("actions", "plugins", "dashboard/static"):
+                if (_src / _rel).is_dir():
+                    _shutil.copytree(_src / _rel, _home / _rel, dirs_exist_ok=True)
+            _stamp.write_text(str(_src), encoding="utf-8")
+        _os.environ["JARVIS_HOME"] = str(_home)
+    except Exception:
+        pass          # never fatal — falls back to the old behaviour
+
 # `JARVIS --version | --selftest | --install-browser` — used by the installers
 # and the release workflow. Handled here, before the heavy imports below.
 #
@@ -126,7 +154,7 @@ WAKE_SLEEP_TIMEOUT = 120.0   # seconds (2 minutes)
 
 def get_base_dir():
     if getattr(sys, "frozen", False):
-        return Path(sys.executable).parent
+        return Path(__import__("os").environ.get("JARVIS_HOME") or Path(sys.executable).parent)
     return Path(__file__).resolve().parent
 
 BASE_DIR        = get_base_dir()
@@ -638,7 +666,7 @@ class JarvisLive:
         self._enhanced_live = True  # proactive audio; auto-disabled if the server rejects it
         self._tuned_live    = True  # turn-taking / media / thinking knobs; same fallback
 
-        _base_dir = Path(__file__).resolve().parent
+        _base_dir = BASE_DIR
         _inline_names = {t["name"] for t in TOOL_DECLARATIONS}
 
         # File-backed tools: every actions/*.py with a TOOL dict, discovered the

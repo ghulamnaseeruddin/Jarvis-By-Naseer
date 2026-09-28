@@ -1,0 +1,39 @@
+name: Microsoft Store package
+
+# Builds the Windows app as an MSIX file for the Microsoft Store.
+# Run it by hand: GitHub -> Actions -> "Microsoft Store package" -> Run workflow.
+# It also runs when you push a version tag such as v1.0.1.
+# No certificate is needed: the Store signs the package itself when you upload it.
+on:
+  workflow_dispatch:
+  push:
+    tags: ["v*.*.*"]
+
+permissions:
+  contents: read
+
+jobs:
+  msix:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pyinstaller
+      - name: Build with PyInstaller
+        run: pyinstaller packaging/windows.spec --noconfirm
+      - name: Verify the build actually runs
+        run: dist\JARVIS\JARVIS.exe --selftest
+      - name: Build the Store package
+        shell: pwsh
+        run: ./packaging/msix/build_msix.ps1 -Version "${{ github.ref_name }}"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: store-package
+          path: |
+            dist/MarkLIV-Store.msix
+            packaging/msix/store-listing/logo-300x300.png
