@@ -1,0 +1,37 @@
+PRIVACY POLICY
+
+Last Updated: September 29, 2026
+
+This Privacy Policy governs the data processing practices of Ghulam Naseeruddin ("we," "us," or "our") regarding the desktop application Jarvis AI Assistant (the "Application") distributed via the Microsoft Store. 
+
+Built for the modern era of artificial intelligence, our Application is architected with a strict Privacy-by-Design philosophy. We prioritize local execution and data minimization to ensure maximum security and user confidentiality.
+
+1. Data Collection and Processing Architecture
+The Application operates primarily as a localized client interface interacting with cloud-based artificial intelligence models.
+
+* Local Execution: By default, your configurations, session variables, operational parameters, and system scripts run locally on your host machine. We do not maintain, host, or operate any central servers that intercept, log, or store your operational data.
+* AI Model Interaction: When you interact with the AI assistant features, the application transmits data payloads (such as text prompts) directly to third-party Large Language Model (LLM) APIs, specifically Google Gemini API. This data transmission is secured end-to-end via Transport Layer Security (TLS/HTTPS).
+
+2. Third-Party Service Providers and API Integration
+To provide advanced cognitive processing, the Application connects to third-party architectures. 
+
+* Google Gemini API: Users supply their own Google Gemini API key to use this integration. Data routed through this API is governed directly by the Google AI Studio Terms of Service and Google Privacy Policy. Google specifies that for API customers, data sent via the API is not utilized to train their public models, ensuring enterprise-grade confidentiality.
+* Microsoft Store Diagnostics: As a Microsoft Store application, basic anonymous telemetry, crash logs, and installation analytics may be collected by Microsoft to monitor software stability. This data is handled according to the Microsoft Privacy Statement.
+
+3. Data Storage and API Key Security
+* Local Credentials: Your Gemini API key and application settings are stored locally on your hard drive using secure local storage mechanisms appropriate for your operating system. 
+* No Cloud Backups: We do not sync your API keys, prompts, or personal data to any external cloud database managed by us. If you uninstall the Application or clear its local data directory, all locally cached configurations are permanently deleted.
+
+4. Data Retention
+Because we do not collect or store your personal data or AI prompt histories on our own servers, we retain zero bytes of your operational history. Any data retention during your session occurs entirely within the temporary runtime volatile memory (RAM) of your local machine or according to the retention schedules of your chosen API provider (Google).
+
+5. Compliance with Global Privacy Frameworks
+We aim to align our application’s data minimization strategies with global standards, including the General Data Protection Regulation (GDPR) and the California Consumer Privacy Act (CCPA). Because we do not collect, store, sell, or profile user data, your rights to deletion, access, and portability are inherently respected and maintained locally on your machine.
+
+6. Updates to This Policy
+We reserve the right to modify this Privacy Policy at any time to reflect architectural upgrades or changes in legal compliance requirements. The updated policy will be made available via the Microsoft Store listing or within the Application’s interface.
+
+7. Contact and Inquiries
+For technical questions regarding the application security architecture or this privacy statement, please contact us at:
+
+* Developer/Publisher Name: Ghulam Naseeruddin
